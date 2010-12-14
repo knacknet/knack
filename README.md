@@ -1,14 +1,12 @@
-# Owin.Common is currently undergoing renaming
+Knack
+=====
 
-Please stay tuned.
-
-Owin.Common
-===========
+Note: The Knack code has not yet been renamed from Owin.Common -> Knack.  I'll be doing that today!
 
 Standard library for OWIN (*Open Web Interface for .NET*)
 ---------------------------------------------------------
 
-Documentation: [http://remi.github.com/Owin.Common][docs]
+Website & Documentation: [http://knacknet.org][site]
 
 Screencast: [http://www.viddler.com/explore/remitaylor/videos/52/][viddler]
 
@@ -22,6 +20,6 @@ License
 
 Owin.Common is released under the MIT license.
 
-[docs]:    http://remi.github.com/Owin.Common
+[site]:    http://knacknet.org
 [viddler]: http://www.viddler.com/explore/remitaylor/videos/52/
 [remi]:    http://remi.org
