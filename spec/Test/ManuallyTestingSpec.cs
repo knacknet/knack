@@ -11,7 +11,7 @@ namespace Owin.Test.Specs {
 	public class ManuallyTestingSpec {
 
 		class App : Application, IApplication {
-			public override IResponse Call(IRequest request) {
+			public override IResponse Invoke(IRequest request) {
 				return new Response().Write("You requested {0} {1}", request.Method, request.Uri);
 			}
 		}

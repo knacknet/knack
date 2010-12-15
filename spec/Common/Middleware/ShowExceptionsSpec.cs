@@ -9,7 +9,7 @@ namespace Owin.Common.Middleware.Specs {
 	public class ShowExceptionsSpec : MockSession {
 
 		class AppThatExplodes : Application, IApplication {
-			public override IResponse Call(IRequest request) {
+			public override IResponse Invoke(IRequest request) {
 				throw new Exception("Boom! My codez are fail!");
 			}
 		}

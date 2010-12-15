@@ -13,27 +13,27 @@ namespace Owin.Test.Specs {
 		[TestFixture]
 		public class InheritingFromMockSessionSpec : MockSession {
 
-				[SetUp] public void Before() { App = new TestApp(); ResetSession(); }
+			[SetUp] public void Before() { App = new TestApp(); ResetSession(); }
 
-				[Test]
-				public void Can_inherit_from_MockSession_to_get_a_nice_DSL__get_example() {
-					Assert.Null(LastResponse); Assert.Null(LastRequest); // both test should start with the LastResponse & LastRequest cleared out
+			[Test]
+			public void Can_inherit_from_MockSession_to_get_a_nice_DSL__get_example() {
+				Assert.Null(LastResponse); Assert.Null(LastRequest); // both test should start with the LastResponse & LastRequest cleared out
 
-					Get("/foo/bar");
-					Assert.That(LastResponse.BodyText, Is.EqualTo("You requested GET /foo/bar"));
-				}
+				Get("/foo/bar");
+				Assert.That(LastResponse.BodyText, Is.EqualTo("You requested GET /foo/bar"));
+			}
 
-				[Test]
-				public void Can_inherit_from_MockSession_to_get_a_nice_DSL__post_example() {
-					Assert.Null(LastResponse); Assert.Null(LastRequest); // both test should start with the LastResponse & LastRequest cleared out
+			[Test]
+			public void Can_inherit_from_MockSession_to_get_a_nice_DSL__post_example() {
+				Assert.Null(LastResponse); Assert.Null(LastRequest); // both test should start with the LastResponse & LastRequest cleared out
 
-					Post("/foo/bar", "name=Lander");
-					Assert.That(LastResponse.BodyText, Is.EqualTo("You requested POST /foo/bar POSTed Name: Lander"));
-				}
+				Post("/foo/bar", "name=Lander");
+				Assert.That(LastResponse.BodyText, Is.EqualTo("You requested POST /foo/bar POSTed Name: Lander"));
+			}
 		}
 
 		class TestApp : Application, IApplication {
-			public override IResponse Call(IRequest rawRequest) {
+			public override IResponse Invoke(IRequest rawRequest) {
 				Request  request  = new Request(rawRequest);
 				Response response = new Response();
 
@@ -48,7 +48,7 @@ namespace Owin.Test.Specs {
 
 		MockSession session;
 
-	[SetUp]
+		[SetUp]
 		public void Before() { session = new MockSession(new TestApp()); }
 
 		[Test]
@@ -120,6 +120,15 @@ namespace Owin.Test.Specs {
 
 			session.Delete("/post-stuff", new Dictionary<string,string>{{"name","Snoopy"}});
 			Assert.That(session.LastResponse.BodyText, Is.EqualTo("You requested DELETE /post-stuff DELETEed Name: Snoopy"));
+		}
+
+		[Test]
+		public void Can_easily_Invoke_an_arbitrary_IRequest() {
+			IRequest req = new RequestWriter("PUT", "/foo");
+			session.Invoke(req);
+			Assert.That(session.LastResponse.BodyText, Is.EqualTo("You requested PUT /foo PUTed Name: "));
+
+			Assert.That(session.Invoke(new RequestWriter("DELETE", "/bar")).BodyText, Is.EqualTo("You requested DELETE /bar DELETEed Name: "));
 		}
 	}
 }

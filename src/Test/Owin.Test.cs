@@ -17,6 +17,10 @@ namespace Owin.Test {
 		public MockRequest  LastRequest  { get; set; }
 		public MockResponse LastResponse { get; set; }
 
+		public MockResponse Invoke(IRequest request) {
+			return GetResponse(request);
+		}
+	
 		public MockResponse GetResponse(IRequest request) {
 			return GetResponse(new MockRequest(request));
 		}

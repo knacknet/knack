@@ -27,8 +27,8 @@ namespace Owin.Common.Specs {
 		}
 
 		class App1 : Application, IApplication {
-			public override IResponse Call(IRequest request) {
-				return new Response().SetBody(string.Format("Called {0} {1}", request.Method, request.Uri));
+			public override IResponse Invoke(IRequest request) {
+				return new Response().SetBody(string.Format("Invoked {0} {1}", request.Method, request.Uri));
 			}
 		}
 
@@ -37,10 +37,10 @@ namespace Owin.Common.Specs {
 			IApplication theApp = new App1();
 
 			Response response = Application.GetResponse(theApp, new RequestWriter("POST", "/hi"));
-			Assert.That(response.BodyText, Is.EqualTo("Called POST /hi"));
+			Assert.That(response.BodyText, Is.EqualTo("Invoked POST /hi"));
 
 			response = Application.GetResponse(theApp, new RequestWriter("PUT", "/dogs/rover"));
-			Assert.That(response.BodyText, Is.EqualTo("Called PUT /dogs/rover"));
+			Assert.That(response.BodyText, Is.EqualTo("Invoked PUT /dogs/rover"));
 		}
 	}
 }

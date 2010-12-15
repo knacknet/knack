@@ -12,7 +12,7 @@ namespace Owin.Common.Specs {
 	public class MiddlewareSpec {
 
 		class TheApp : Application, IApplication {
-			public override IResponse Call(IRequest request) {
+			public override IResponse Invoke(IRequest request) {
 				return new Response("Hello from the app");
 			}
 		}
@@ -30,7 +30,7 @@ namespace Owin.Common.Specs {
 			public string Prefix = "WRAPPED ";
 			public string Suffix = " By Middleware!";
 
-			public override IResponse Call(IRequest request) {
+			public override IResponse Invoke(IRequest request) {
 				Response response = new Response(Application.Invoke(InnerApplication, request));
 				response.BodyText = Prefix + response.BodyText + Suffix;
 				return response;

@@ -9,7 +9,7 @@ namespace Owin.Common.Middleware.Specs {
 	public class LintSpec : MockSession {
 
 		class LintApp : Application, IApplication {
-			public override IResponse Call(IRequest request) {
+			public override IResponse Invoke(IRequest request) {
 			    Response response = new Response();
 
 			    switch (request.Uri) {

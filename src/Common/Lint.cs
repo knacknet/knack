@@ -12,7 +12,7 @@ namespace Owin {
 
 	public class Lint : Application, IApplication, IMiddleware {
 
-		public override IResponse Call(IRequest request) {
+		public override IResponse Invoke(IRequest request) {
 			Lint.Validate(request);
 			IResponse response = Application.Invoke(InnerApplication, request);
 			Lint.Validate(response);

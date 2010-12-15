@@ -3,7 +3,7 @@ using System;
 namespace Owin {
 
 	public class ShowExceptions : Application, IApplication, IMiddleware {
-		public override IResponse Call(IRequest request) {
+		public override IResponse Invoke(IRequest request) {
 			try {
 				return Application.Invoke(InnerApplication, request);
 			} catch (Exception ex) {

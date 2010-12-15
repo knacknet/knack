@@ -28,33 +28,29 @@ namespace Owin {
 
 		public IApplication InnerApplication { get; set; }
 
-		/// <summary>If you override Call in your Application subclass, it will be used for invoking your application if Responder is not set</summary>
-		public virtual IResponse Call(IRequest request) {
-			throw new NotImplementedException("You need to override Call in your Application subclass or set Application.Responder.");
-		}
-
 		ApplicationResponder _responder;
 
-		/// <summary>The delegate use to actually invoke your application.  If not set manually, the Call method is used.</summary>
-		public ApplicationResponder Responder {
+		/// <summary>The delegate use to actually invoke your application.  If not set manually, the Invoke method is used.</summary>
+		public virtual ApplicationResponder Responder {
 			get {
 				if (_responder == null)
-					_responder = new ApplicationResponder(Call);
+					_responder = new ApplicationResponder(Invoke);
 				return _responder;
 			}
 			set { _responder = value; }
 		}
 
-		public IAsyncResult BeginInvoke(IRequest request, AsyncCallback callback, object state) {
+		public virtual IAsyncResult BeginInvoke(IRequest request, AsyncCallback callback, object state) {
 			return Responder.BeginInvoke(request, callback, state);
 		}
 
-		public IResponse EndInvoke(IAsyncResult result) {
+		public virtual IResponse EndInvoke(IAsyncResult result) {
 			return Responder.EndInvoke(result);
 		}
 
-		public IResponse Invoke(IRequest request) {
-			return Application.Invoke(this, request);
+		/// <summary>If you override Invoke in your Application subclass, it will be used for invoking your application if Responder is not set</summary>
+		public virtual IResponse Invoke(IRequest request) {
+			throw new NotImplementedException("You need to override Invoke in your Application subclass or set Application.Responder.");
 		}
 
 		public static IResponse Invoke(IApplication app, IRequest request) {
@@ -62,7 +58,7 @@ namespace Owin {
 			return app.EndInvoke(result);
 		}
 
-		public Response GetResponse(IRequest request) {
+		public virtual Response GetResponse(IRequest request) {
 			return Application.GetResponse(this, request);
 		}
 
